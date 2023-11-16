@@ -7,17 +7,18 @@ let timer;
 
 //로직진행
 function appStart() {
+  //게임 종료 창
   const displayGameOver = () => {
     const div = document.createElement("div");
     div.innerText = "게임이 종료되었습니다.";
     div.style =
-      "display:flex; justify-contents:center; align-items:center; position:absolute; top:40vh; left:38%; background-color:white; width:200px; height:100px;";
+      "display:flex; justify-content:center; align-items:center; position:absolute; top:40vh; left:38%; background-color:orange; font-weight:bold; width:200px; height:100px;";
     document.body.appendChild(div);
   };
 
   const nextLine = () => {
-    if (attempts === 6) return gameover();
     attempts += 1;
+    if (attempts === 6) return gameover();
     index = 0;
   };
 
@@ -43,8 +44,10 @@ function appStart() {
       );
       //입력글자
       const input_key = block.innerText;
+
       //정답글자
       const answer_key = answer[i];
+      block.style.animation = "filp 0.5s ease forwards";
 
       //만약 입력글자와 정답글자가 같을때
       if (input_key === answer_key) {
@@ -82,9 +85,6 @@ function appStart() {
 
   //키 입력시 적용
   const handleKeyDown = (event) => {
-    // console.log("키 상태 확인!! event => ", event);
-    // console.log(event.key, event.keyCode);
-
     const key = event.key.toUpperCase();
     const keyCode = event.keyCode;
     const thisBlock = document.querySelector(
@@ -102,28 +102,44 @@ function appStart() {
   };
 
   // 버튼 클릭 이벤트를 추가하는 함수
-  // const addButtonClickEvents = () => {
-  //   const buttons = document.querySelectorAll(".keyboard-column");
-  //   console.log(buttons);
+  const addButtonClickEvents = () => {
+    const buttons = document.querySelectorAll(".keyboard-column");
+    // console.log(buttons);
 
-  //   buttons.forEach((button) => {
-  //     button.addEventListener("click", function () {
-  //       const letter = this.getAttribute("data-key"); // 해당 버튼의 데이터 속성 값 가져오기
-  //       const boardColumns = document.querySelector(
-  //         `.board-column[data-index='${attempts}${index}']`
-  //       );
+    buttons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const letter = this.getAttribute("data-key"); // 해당 버튼의 데이터 속성 값 가져오기
 
-  //       // 입력 가능한 위치에 글자 추가
-  //       for (let i = 0; i < boardColumns.length; i++) {
-  //         if (boardColumns[i].innerText === "") {
-  //           boardColumns[i].innerText = letter;
-  //           index++; // 인덱스 증가
-  //           break;
-  //         }
-  //       }
-  //     });
-  //   });
-  // };
+        const boardColumns = document.querySelectorAll(
+          `.board-column[data-index='${attempts}${index}']`
+        );
+
+        //backspace인 경우
+        if (letter === "BACK") {
+          handleBackspace();
+          return;
+        } else if (index === 5) {
+          if (letter === "ENTER") {
+            handleEnterKey();
+            return;
+          }
+        } else if (index < 5) {
+          if (letter === "ENTER") {
+            return;
+          }
+        }
+
+        // 입력 가능한 위치에 글자 추가
+        for (let i = 0; i < boardColumns.length; i++) {
+          if (boardColumns[i].innerText === "") {
+            boardColumns[i].innerText = letter;
+            index += 1; // 인덱스 증가
+            break;
+          }
+        }
+      });
+    });
+  };
 
   const startTimer = () => {
     //시작시간
@@ -146,7 +162,8 @@ function appStart() {
 
   startTimer();
   window.addEventListener("keydown", handleKeyDown);
-  // window.addEventListener("load", addButtonClickEvents);
+  //버튼 창 적용
+  window.addEventListener("load", addButtonClickEvents);
 }
 
 appStart();

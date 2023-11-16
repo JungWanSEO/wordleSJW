@@ -38,17 +38,17 @@ footer {
   width: 35px;
 }
 
-@keyframes text_popping {
+@keyframes filp {
   0% {
-    transform: translateY(0px);
+    transform: rotateX(0);
   }
-  30% {
-    transform: translateY(-10px);
+  45% {
+    transform: rotateX(90deg);
   }
-  70% {
-    transform: translateY(-10px);
+  55% {
+    transform: rotateX(90deg);
   }
   100% {
-    transform: translateY(0px);
+    transform: rotateX(0);
   }
 }
