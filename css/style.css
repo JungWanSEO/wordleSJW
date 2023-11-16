@@ -1,0 +1,28 @@
+@import "header.css";
+@import "footer.css";
+@import "main.css";
+
+:root {
+  --button-border-color: #d3d6da;
+  --button-answer-color: #6aaa64;
+  --border-line-color: rgb(211, 214, 218);
+  --text-color: #000;
+}
+
+.media-info-msg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: salmon;
+}
+
+@media screen and (max-width: 1024px) {
+  .media-info-msg {
+    display: none;
+  }
+}
