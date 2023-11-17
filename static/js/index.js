@@ -1,5 +1,5 @@
 //정답
-const answer = "APPLE";
+//const answer = "APPLE";
 
 let index = 0;
 let attempts = 0;
@@ -31,9 +31,15 @@ function appStart() {
   };
 
   //엔터키를 누를 경우
-  const handleEnterKey = () => {
+  const handleEnterKey = async () => {
     //정답확인
     console.log("엔터키 입력!!");
+
+    //서버에서 정답을 받아오는 코드
+    const response = await fetch("/answer");
+    const answer = await response.json();
+    // const answer_object = await response.json();
+    // const answer = answer_object.answer;
 
     //맞은 개수
     let check_answer = 0;
